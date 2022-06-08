@@ -1,5 +1,6 @@
 package BigliettoTreno;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 public class BigliettoDelTreno {
 
 	public static void main(String[] args) {
@@ -10,22 +11,22 @@ public class BigliettoDelTreno {
 		 * va applicato uno sconto del 40% per gli over 65
 		 */
 		
-		int chilometriDaPerc;
+		double chilometriDaPerc;
 		int etaPasseggero;
 		
 		Scanner pers = new Scanner(System.in);
 		
-		System.out.print("Inserisci i Km che vuoi percorrere: ");
-		chilometriDaPerc = pers.nextInt();
+		DecimalFormat df = new DecimalFormat("#0.00€");
 		
+		System.out.print("Inserisci i Km che vuoi percorrere: ");
+		chilometriDaPerc = pers.nextDouble();	
 		System.out.print("Inserisci la tua età: ");
 		etaPasseggero = pers.nextInt();
 		
-		// prezzo
+		// prezzo base
 		
 		double prezzoPerKm = 0.21;
 		double prezzoDelBiglietto = prezzoPerKm * chilometriDaPerc;
-		System.out.print("Prezzo del biglietto: ");
 		
 		// sconto minorenni
 		double scontoMinorenni = 0.2;
@@ -38,15 +39,18 @@ public class BigliettoDelTreno {
 		double prezzoFinaleOver = prezzoDelBiglietto - scontoOver65SulTot;
 		
 		
-		if(etaPasseggero < 18) {
-			System.out.print(prezzoFinaleMinorenni);
-		} else if (etaPasseggero >= 65) {
-			System.out.print(prezzoFinaleOver);
-		} else {
-			System.out.println(prezzoDelBiglietto);
-		}
 		
-
+		if(etaPasseggero < 18) {
+			System.out.println("Hai diritto allo sconto minorenni");
+			System.out.println("Il prezzo del biglietto è: " + df.format(prezzoFinaleMinorenni));
+		} else if (etaPasseggero >= 65) {
+			System.out.println("Hai diritto allo sconto over65");
+			System.out.println("Il prezzo del biglietto è: " + df.format(prezzoFinaleOver));
+		} else {
+			System.out.println("Il prezzo del biglietto è: " + df.format(prezzoDelBiglietto));
+		}
+//chiudo lo scanner 
+		pers.close();
 	}
 
 }
